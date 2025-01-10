@@ -1,0 +1,26 @@
+{
+  "name": "cse-141-project01",
+  "version": "1.0.0",
+  "description": "first project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josequemba/cse-141-project01.git"
+  },
+  "author": "Jose Eliud",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josequemba/cse-141-project01/issues"
+  },
+  "homepage": "https://github.com/josequemba/cse-141-project01#readme",
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongodb": "^6.12.0",
+    "nodemon": "^3.1.9"
+  }
+}
