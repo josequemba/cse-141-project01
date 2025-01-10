@@ -1,7 +1,7 @@
 const express = require('express'); // Import express
 const bodyParser = require('body-parser'); // Import body-parser
 const mongodb = require('./database/index');
-const indexRoutes = require('./routes/index');
+const userRoutes = require('./routes/userRoutes');
 
 const port = process.env.PORT || 8081;
 const app = express();
@@ -12,7 +12,7 @@ app
     res.setHeader('Access-Control-Allow-Origin', '*'); // CORS middleware
     next();
   })
-  .use('/index', indexRoutes); // Set up routes
+  .use('/', userRoutes); // Set up routes
 
 // Initialize the MongoDB connection and start the server
 mongodb.initDb((err, mongodb) => {

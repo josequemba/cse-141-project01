@@ -2,9 +2,8 @@ const mongodb = require("../database/index");
 const ObjectId = require("mongodb").ObjectId;
 
 const getAll = async (req, res) => {
-  console.log("eliudall")
   try {
-    const result = await mongodb.getDatabase().db().collection("mycollection").find();
+    const result = await mongodb.getDb().db("sample_mflix").collection("users").find();
     const users = await result.toArray();
     res.setHeader("Content-Type", "application/json");
     res.status(200).json(users);
@@ -18,7 +17,7 @@ const getSingle = async (req, res) => {
   console.log("eliud")
   try {
     const userId = new ObjectId(req.params.id);
-    const user = await mongodb.getDatabase().db().collection("mycollection").findOne({ _id: userId });
+    const user = await mongodb.getDb().db("sample_mflix").collection("users").findOne({ _id: userId });
     if (user) {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(user);
