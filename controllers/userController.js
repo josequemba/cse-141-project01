@@ -6,8 +6,8 @@ const getAll = async (req, res) => {
   try {
     const result = await mongodb
       .getDb()
-      .db("sample_mflix")
-      .collection("users")
+      .db("CSE_Web_Services_Class")
+      .collection("contacts")
       .find();
     const users = await result.toArray();
     res.setHeader("Content-Type", "application/json");
@@ -26,8 +26,8 @@ const getSingle = async (req, res) => {
     const userId = new ObjectId(req.params.id);
     const user = await mongodb
       .getDb()
-      .db("sample_mflix")
-      .collection("users")
+      .db("CSE_Web_Services_Class")
+      .collection("contacts")
       .findOne({ _id: userId });
     if (user) {
       res.setHeader("Content-Type", "application/json");
@@ -46,23 +46,18 @@ const getSingle = async (req, res) => {
 const createUser = async (req, res) => {
   //#swagger.tags=["Users"]
   try {
-    const firstName = req.body.firstName; 
-    const lastName = req.body.lastName;  
-
-    if (firstName && lastName) {
-      req.body.name = `${firstName.trim()} ${lastName.trim()}`;
-    }
-
     const user = {
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password
+      favoriteColor: req.body.favoriteColor,
+      birthday: req.body.birthday
     }
 
     const result = await mongodb
       .getDb()
-      .db("sample_mflix")
-      .collection("users")
+      .db("CSE_Web_Services_Class")
+      .collection("contacts")
       .insertOne(user);
 
     if (result.acknowledged > 0) {
@@ -83,23 +78,19 @@ const updateUser = async (req, res) => {
   //#swagger.tags=["Users"]
   try {
     const userId = new ObjectId(req.params.id);
-    const firstName = req.body.firstName; 
-    const lastName = req.body.lastName;  
-
-    if (firstName && lastName) {
-      req.body.name = `${firstName.trim()} ${lastName.trim()}`;
-    }
 
     const user = {
-      name: req.body.name,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password
+      favoriteColor: req.body.favoriteColor,
+      birthday: req.body.birthday
     }
 
     const result = await mongodb
       .getDb()
-      .db("sample_mflix")
-      .collection("users")
+      .db("CSE_Web_Services_Class")
+      .collection("contacts")
       .replaceOne({_id: userId}, user);
 
     if (result.modifiedCount > 0) {
@@ -123,8 +114,8 @@ const deleteUser = async (req, res) => {
 
     const result = await mongodb
       .getDb()
-      .db("sample_mflix")
-      .collection("users")
+      .db("CSE_Web_Services_Class")
+      .collection("contacts")
       .deleteOne({_id: userId});
 
     if (result.deletedCount > 0) {
