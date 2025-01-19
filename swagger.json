@@ -24,6 +24,16 @@
         }
       }
     },
+    "/api-docs": {
+      "get": {
+        "description": "",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/users/": {
       "get": {
         "tags": [
@@ -66,7 +76,10 @@
                 "email": {
                   "example": "any"
                 },
-                "password": {
+                "favoriteColor": {
+                  "example": "any"
+                },
+                "birthday": {
                   "example": "any"
                 }
               }
@@ -142,7 +155,10 @@
                 "email": {
                   "example": "any"
                 },
-                "password": {
+                "favoriteColor": {
+                  "example": "any"
+                },
+                "birthday": {
                   "example": "any"
                 }
               }
