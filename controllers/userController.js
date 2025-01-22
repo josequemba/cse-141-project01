@@ -12,6 +12,7 @@ const getAll = async (req, res) => {
     const users = await result.toArray();
     res.setHeader("Content-Type", "application/json");
     res.status(200).json(users);
+    console.log("eliud1")
   } catch (error) {
     console.error("Error fetching all users:", error);
     res
@@ -23,6 +24,10 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
   //#swagger.tags=["Users"]
   try {
+    if(!ObjectId.isValid(req.params.id)) {
+      res.status(400).json( "Must be a valid contact id to find a contact" );
+    }
+
     const userId = new ObjectId(req.params.id);
     const user = await mongodb
       .getDb()
@@ -32,9 +37,9 @@ const getSingle = async (req, res) => {
     if (user) {
       res.setHeader("Content-Type", "application/json");
       res.status(200).json(user);
-    } else {
-      res.status(404).json({ message: "User not found." });
-    }
+  } else {
+    res.status(404).json({ message: "User not found." });
+  }
   } catch (error) {
     console.error("Error fetching single user:", error);
     res
@@ -64,19 +69,22 @@ const createUser = async (req, res) => {
       res.setHeader("Content-Type", "application/json");
       res.status(204).json();
     } else {
-      res.status(500).json({ message: "Some error occured while creating a new user." });
+      res.status(500).json( result.error || "Some error occured while creating a new user." );
     }
   } catch (error) {
     console.error("Error Creating a user:", error);
     res
       .status(500)
-      .json({ message: "An error occurred while creating a user." });
+      .json(error || "An error occurred while updating the user." );
   }
 };
 
 const updateUser = async (req, res) => {
   //#swagger.tags=["Users"]
   try {
+    if(!ObjectId.isValid(req.params.id)) {
+      res.status(400).json( "Must be a valid contact id to update a contact" );
+    }
     const userId = new ObjectId(req.params.id);
 
     const user = {
@@ -97,19 +105,22 @@ const updateUser = async (req, res) => {
       res.setHeader("Content-Type", "application/json");
       res.status(204).json();
     } else {
-      res.status(500).json({ message: "Some error occured while updating the user." });
+      res.status(500).json( result.error || "Some error occured while updating the user." );
     }
   } catch (error) {
     console.error("Error updating the user:", error);
     res
       .status(500)
-      .json({ message: "An error occurred while updating the user." });
+      .json(error || "An error occurred while updating the user." );
   }
 };
 
 const deleteUser = async (req, res) => {
   //#swagger.tags=["Users"]
   try {
+    if(!ObjectId.isValid(req.params.id)) {
+      res.status(400).json( "Must be a valid contact id to delete a contact" );
+    }
     const userId = new ObjectId(req.params.id);
 
     const result = await mongodb
@@ -122,13 +133,13 @@ const deleteUser = async (req, res) => {
       res.setHeader("Content-Type", "application/json");
       res.status(204).json();
     } else {
-      res.status(500).json({ message: "Some error occured while deleting account." });
+      res.status(500).json( result.error || "Some error occured while deleting account." );
     }
   } catch (error) {
     console.error("Error deleting account:", error);
     res
       .status(500)
-      .json({ message: "An error occurred while deleting account." });
+      .json( error || "Some error occured while deleting account.");
   }
 };
 
